@@ -1,0 +1,12 @@
+body
+{
+     padding: 2rem; 
+     margin: 0;
+     border: 0;
+     background-color: black;
+     color: white;
+}
+textarea 
+{
+     font-family: monospace;
+}
