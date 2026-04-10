@@ -108,15 +108,20 @@ def home():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    import webbrowser
-    import threading
+    port = int(os.environ.get("PORT", 5000))
+    # In production environments (like Render), we don't want to open the browser or use threading
+    if os.environ.get("RENDER"):
+        app.run(host='0.0.0.0', port=port)
+    else:
+        import webbrowser
+        import threading
 
-    # Function to run Flask in a background thread
-    def run_app():
-        app.run(debug=False, use_reloader=False)
+        # Function to run Flask in a background thread
+        def run_app():
+            app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
 
-    # Start Flask in a new thread
-    threading.Thread(target=run_app).start()
+        # Start Flask in a new thread
+        threading.Thread(target=run_app).start()
 
-    # Automatically open the default web browser
-    webbrowser.open("http://127.0.0.1:5000/")
+        # Automatically open the default web browser
+        webbrowser.open(f"http://127.0.0.1:{port}/")
